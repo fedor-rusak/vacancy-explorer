@@ -33,6 +33,15 @@ make test
 make run
 ```
 
-Open [application URL](http://localhost:8080/) in your browser. You should see *Hello Gradle!* message.
+To add vacancy:
+
+```
+curl localhost:8080/vacancies \
+     --request POST \
+     --header 'Content-type: application/json' \
+     --data '{"description":"Simple description"}'
+```
+
+Open [corresponding URL](http://localhost:8080/vacancies/1) in your browser to see vacancy data.
 
 Ctrl-c to stop application.
