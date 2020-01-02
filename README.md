@@ -16,3 +16,23 @@ CRUD operations for vacancy descriptions.
 Search operation with parameters to filter results.
 
 NO site-specific adapters, crawlers, integrations.
+
+## Build & test instuctions
+
+```
+make build
+```
+
+```
+make test
+```
+
+## Run & use instructions
+
+```
+make run
+```
+
+Open [application URL](http://localhost:8080/) in your browser. You should see *Hello Gradle!* message.
+
+Ctrl-c to stop application.
