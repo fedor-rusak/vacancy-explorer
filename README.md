@@ -44,4 +44,13 @@ curl localhost:8080/vacancies \
 
 Open [corresponding URL](http://localhost:8080/vacancies/1) in your browser to see vacancy data.
 
+
+To delete vacancy by id:
+
+```
+curl localhost:8080/vacancies/1 \
+     --request DELETE
+```
+
+
 Ctrl-c to stop application.

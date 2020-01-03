@@ -1,5 +1,8 @@
 package ru.rusak.fedor.explorer.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,8 +22,12 @@ public class VacancyController {
 	private Map<Integer, VacancyDto> internalStorage = Collections.synchronizedMap(new HashMap<>());
 
 	@GetMapping(path = "/vacancies/{id}", produces = "application/json")
-	public VacancyDto getById(@PathVariable int id) {
-		return internalStorage.get(id);
+	public ResponseEntity<VacancyDto> getById(@PathVariable int id) {
+		if (internalStorage.containsKey(id)) {
+			return new ResponseEntity(internalStorage.get(id), HttpStatus.OK);
+		}
+
+		return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
 	@PostMapping(path = "/vacancies", consumes = "application/json")
@@ -31,6 +38,17 @@ public class VacancyController {
 		internalStorage.put(savedId, vacancyDto);
 
 		return savedId;
+	}
+
+	@DeleteMapping(path = "/vacancies/{id}")
+	public ResponseEntity deleteById(@PathVariable int id) {
+		if (internalStorage.containsKey(id)) {
+			internalStorage.remove(id);
+
+			return new ResponseEntity(HttpStatus.OK);
+		}
+
+		return new ResponseEntity(HttpStatus.NOT_FOUND);
 	}
 
 }

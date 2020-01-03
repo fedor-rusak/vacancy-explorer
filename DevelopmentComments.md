@@ -79,3 +79,19 @@ Previously I had to use online interpreter or create some one-time file.
 With JDK 11 I can use jshell command and have interactive Java interpreter in my console.
 
 Type */help* to get manual or */exit* to exit.
+
+### ResponseEntity
+
+That is decent approach to control status for you http responses. Like it!
+
+### Tests
+
+Java tests can be really slow. Best thing I have now for this is super-simple test to verify response statuses.
+
+And fast CPU can also help.
+
+### JVM is RAM hungry beast
+
+Without default flags my *simple* app uses around 380Mb memory. For simple web-server.
+
+I know JVM has many tuning knobs and additional facilities. But it is still a huge RAM consumption to me.
