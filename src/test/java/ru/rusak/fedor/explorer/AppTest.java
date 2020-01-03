@@ -26,13 +26,6 @@ public class AppTest {
 	private MockMvc mvc;
 
 	@Test
-	public void helloGradle() throws Exception {
-		mvc.perform(get("/"))
-			.andExpect(status().isOk())
-			.andExpect(content().string("Hello Gradle!"));
-	}
-
-	@Test
 	public void checkVacancyController() throws Exception {
 		mvc.perform(post("/vacancies")
 				.contentType(MediaType.APPLICATION_JSON)
