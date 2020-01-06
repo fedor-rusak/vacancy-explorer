@@ -105,3 +105,11 @@ All thos timezones and summer saving weirdness. I really hope UTC is the simples
 Looks like super over-engineered way to check some pieces of http response.
 
 Yet it makes test code shorter, so maybe it has some practical benefits for now.
+
+### Validation research
+
+I checked existing best practices for implementing input validation.
+
+I saw Hibernate Validator, JSR-303, another set of annotation for Spring.
+
+Maybe those approaches are worth for huge amount of validation. But in my case simple if-block is good enough.

@@ -41,14 +41,20 @@ public class VacancyController {
 	}
 
 	@PostMapping(path = "/vacancies", consumes = "application/json")
-	public int add(@RequestBody VacancyDto vacancyDto) {
+	public ResponseEntity add(@RequestBody VacancyDto vacancyDto) {
+		if (isEmpty(vacancyDto.getVacancyName())
+		    || isEmpty(vacancyDto.getDescription())
+		    || isEmpty(vacancyDto.getSourceName())
+		    || isEmpty(vacancyDto.getCorrespondingId())) {
+			return new ResponseEntity("Fields vacancyName, description, sourceName and correspondingId are mandatory.", HttpStatus.BAD_REQUEST);
+		}
 		int savedId = idGenerator.addAndGet(1);
 		vacancyDto.setId(savedId);
 		vacancyDto.setCreationTimestamp(sdf.format(new Date()));
 
 		internalStorage.put(savedId, vacancyDto);
 
-		return savedId;
+		return new ResponseEntity(savedId, HttpStatus.OK);
 	}
 
 	@DeleteMapping(path = "/vacancies/{id}")
@@ -60,6 +66,10 @@ public class VacancyController {
 		}
 
 		return new ResponseEntity(HttpStatus.NOT_FOUND);
+	}
+
+	public boolean isEmpty(String value) {
+		return value == null || value.trim().equals("");
 	}
 
 }

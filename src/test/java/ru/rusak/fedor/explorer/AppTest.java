@@ -1,5 +1,9 @@
 package ru.rusak.fedor.explorer;
 
+import ru.rusak.fedor.explorer.controller.VacancyDto;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class AppTest {
 
+	public static final String VACANCY_NAME = "Test Vacancy Name";
+	public static final String DESCRIPTION = "Test Description";
+	public static final String SOURCE_NAME = "Test Source Name";
+	public static final String CORRESPONDING_ID = "Test Corresponding Id";
+
 	@Autowired
 	private MockMvc mvc;
 
@@ -36,17 +45,36 @@ public class AppTest {
 		mvc.perform(get("/vacancies/1"))
 				.andExpect(status().isNotFound());
 
-		//adding allows reading and deleting
+		//adding is validated
 		mvc.perform(post("/vacancies")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content("{\"description\":\"Simple data\"}"))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().string("Fields vacancyName, description, sourceName and correspondingId are mandatory."));
+
+		//adding allows reading and deleting
+		VacancyDto dto = new VacancyDto();
+		dto.setVacancyName(VACANCY_NAME);
+		dto.setDescription(DESCRIPTION);
+		dto.setSourceName(SOURCE_NAME);
+		dto.setCorrespondingId(CORRESPONDING_ID);
+
+		String postBody = new ObjectMapper().writeValueAsString(dto);
+
+		mvc.perform(post("/vacancies")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(postBody))
 				.andExpect(status().isOk())
 				.andExpect(content().string("1"));
 
+
 		mvc.perform(get("/vacancies/1"))
 				.andExpect(jsonPath("id").value("1"))
-				.andExpect(jsonPath("description").value("Simple data"))
 				.andExpect(jsonPath("creationTimestamp").exists())
+				.andExpect(jsonPath("vacancyName").value(VACANCY_NAME))
+				.andExpect(jsonPath("description").value(DESCRIPTION))
+				.andExpect(jsonPath("sourceName").value(SOURCE_NAME))
+				.andExpect(jsonPath("correspondingId").value(CORRESPONDING_ID))
 				.andExpect(header().string(HttpHeaders.CONTENT_TYPE, containsString(MediaType.APPLICATION_JSON.toString())))
 				.andExpect(status().isOk());
 

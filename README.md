@@ -39,7 +39,12 @@ To add vacancy:
 curl localhost:8080/vacancies \
      --request POST \
      --header 'Content-type: application/json' \
-     --data '{"description":"Simple description"}'
+     --data '{
+     	"vacancyName": "Cool IT title",
+     	"description":"Simple description",
+     	"sourceName": "job site number 42",
+     	"correspondingId": "1"
+     }'
 ```
 
 Open [corresponding URL](http://localhost:8080/vacancies/1) in your browser to see vacancy data.
