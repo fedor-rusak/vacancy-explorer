@@ -95,3 +95,13 @@ And fast CPU can also help.
 Without default flags my *simple* app uses around 380Mb memory. For simple web-server.
 
 I know JVM has many tuning knobs and additional facilities. But it is still a huge RAM consumption to me.
+
+### Time is hard
+
+All thos timezones and summer saving weirdness. I really hope UTC is the simplest right solution to have consistent creation timestamps.
+
+### ResultMatchers & hamcrest
+
+Looks like super over-engineered way to check some pieces of http response.
+
+Yet it makes test code shorter, so maybe it has some practical benefits for now.

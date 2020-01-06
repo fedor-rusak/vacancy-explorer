@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,7 +44,9 @@ public class AppTest {
 				.andExpect(content().string("1"));
 
 		mvc.perform(get("/vacancies/1"))
-				.andExpect(content().string("{\"id\":1,\"description\":\"Simple data\"}"))
+				.andExpect(jsonPath("id").value("1"))
+				.andExpect(jsonPath("description").value("Simple data"))
+				.andExpect(jsonPath("creationTimestamp").exists())
 				.andExpect(header().string(HttpHeaders.CONTENT_TYPE, containsString(MediaType.APPLICATION_JSON.toString())))
 				.andExpect(status().isOk());
 

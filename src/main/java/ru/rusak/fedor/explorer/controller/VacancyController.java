@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.HashMap;
 import java.util.Collections;
 
@@ -20,6 +23,13 @@ public class VacancyController {
 
 	private AtomicInteger idGenerator = new AtomicInteger(0);
 	private Map<Integer, VacancyDto> internalStorage = Collections.synchronizedMap(new HashMap<>());
+
+	private final SimpleDateFormat sdf;
+
+	public VacancyController() {
+		sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+	}
 
 	@GetMapping(path = "/vacancies/{id}", produces = "application/json")
 	public ResponseEntity<VacancyDto> getById(@PathVariable int id) {
@@ -34,6 +44,7 @@ public class VacancyController {
 	public int add(@RequestBody VacancyDto vacancyDto) {
 		int savedId = idGenerator.addAndGet(1);
 		vacancyDto.setId(savedId);
+		vacancyDto.setCreationTimestamp(sdf.format(new Date()));
 
 		internalStorage.put(savedId, vacancyDto);
 
