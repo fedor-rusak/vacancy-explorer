@@ -113,3 +113,17 @@ I checked existing best practices for implementing input validation.
 I saw Hibernate Validator, JSR-303, another set of annotation for Spring.
 
 Maybe those approaches are worth for huge amount of validation. But in my case simple if-block is good enough.
+
+### DAO vs Repository
+
+Googled a bit. DAO looks like simplistic approach without *hard* contract. Do something with sybsystem that is related to entities.
+
+Repository seems to be expected to provide API closer to Collection e.g. add, remove, contains methods. Sounds reasonable to me.
+
+### Java thing
+
+So you can call variable same as class and there is no clash.
+
+While classname is required to use classloader propertly. Variable name is just any unique text identifier for object/primitive.
+
+Still surprised me.
