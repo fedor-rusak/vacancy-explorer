@@ -1,5 +1,7 @@
 package ru.rusak.fedor.explorer.controller;
 
+import ru.rusak.fedor.explorer.data.VacancyDto;
+
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;

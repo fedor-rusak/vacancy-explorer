@@ -1,6 +1,6 @@
 package ru.rusak.fedor.explorer;
 
-import ru.rusak.fedor.explorer.controller.VacancyDto;
+import ru.rusak.fedor.explorer.data.VacancyDto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

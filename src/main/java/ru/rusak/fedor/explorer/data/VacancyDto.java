@@ -1,4 +1,4 @@
-package ru.rusak.fedor.explorer.controller;
+package ru.rusak.fedor.explorer.data;
 
 /**
  *  Data of this format is used for vacancy CRUD API.

@@ -1,6 +1,6 @@
 package ru.rusak.fedor.explorer.service;
 
-import ru.rusak.fedor.explorer.controller.VacancyDto;
+import ru.rusak.fedor.explorer.data.VacancyDto;
 
 import org.springframework.stereotype.Component;
 

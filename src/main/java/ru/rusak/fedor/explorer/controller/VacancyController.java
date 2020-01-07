@@ -1,5 +1,6 @@
 package ru.rusak.fedor.explorer.controller;
 
+import ru.rusak.fedor.explorer.data.VacancyDto;
 import ru.rusak.fedor.explorer.service.SearchService;
 
 import org.springframework.http.HttpStatus;

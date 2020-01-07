@@ -139,3 +139,19 @@ And component is just something without particular meaning in terms of service, 
 I guess it makes sense to say that PlayService serves the purpose of providing functionality of playing while hiding exact details of it.
 
 Good enough explanation to me.
+
+### Dto or to not Dto
+
+From the first glance calling some classes with additional letters Dto (Data Transfer Object) looks stupid.
+
+Are not most of them transferred in some way?
+
+But for me these letters mean:
+ * this class is deserialized request to my controllers
+ * this class is soon to be serialized response from my controllers
+ * this class hold deserialized response from other system I depend on
+ * you get the idea, something that is close to *protocol* of communication
+
+Name with Dto means that this structure is requirement from some communication agreement that we have. If don't want to change internal details any time some contract change we can implement step of transformation to internal objects.
+
+In my case I decide what data to expect in request so I can freely use it internally. Yet marking vacancy data sa VacancyDto I communicate to myself that this sort of data is expected from my system as response or expected to be used in request.
