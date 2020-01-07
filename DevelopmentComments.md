@@ -127,3 +127,15 @@ So you can call variable same as class and there is no clash.
 While classname is required to use classloader propertly. Variable name is just any unique text identifier for object/primitive.
 
 Still surprised me.
+
+### Spring Component vs Service
+
+According the internets service annotation should be used on classes holding business logic.
+
+While the word itself means it serves to someone. As web-server serves responses to requests.
+
+And component is just something without particular meaning in terms of service, controller, repository but you want it to be autowired.
+
+I guess it makes sense to say that PlayService serves the purpose of providing functionality of playing while hiding exact details of it.
+
+Good enough explanation to me.

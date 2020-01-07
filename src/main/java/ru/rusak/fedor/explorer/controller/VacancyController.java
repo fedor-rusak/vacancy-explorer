@@ -1,5 +1,7 @@
 package ru.rusak.fedor.explorer.controller;
 
+import ru.rusak.fedor.explorer.service.SearchService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class VacancyController {
 
 	private VacancyRepository vacancyRepository;
+	private SearchService searchService;
 
-	public VacancyController(VacancyRepository vacancyRepository) {
+	public VacancyController(VacancyRepository vacancyRepository, SearchService searchService) {
 		this.vacancyRepository = vacancyRepository;
+		this.searchService = searchService;
 	}
 
 	@GetMapping(path = "/vacancies/{id}", produces = "application/json")
@@ -38,6 +42,8 @@ public class VacancyController {
 
 		int savedId = vacancyRepository.add(vacancyDto);
 
+		searchService.index(savedId, vacancyDto);
+
 		return new ResponseEntity(savedId, HttpStatus.OK);
 	}
 
@@ -45,6 +51,8 @@ public class VacancyController {
 	public ResponseEntity deleteById(@PathVariable int id) {
 		if (vacancyRepository.contains(id)) {
 			vacancyRepository.remove(id);
+
+			searchService.unindex(id);
 
 			return new ResponseEntity(HttpStatus.OK);
 		}
