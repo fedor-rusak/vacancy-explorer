@@ -155,3 +155,21 @@ But for me these letters mean:
 Name with Dto means that this structure is requirement from some communication agreement that we have. If don't want to change internal details any time some contract change we can implement step of transformation to internal objects.
 
 In my case I decide what data to expect in request so I can freely use it internally. Yet marking vacancy data sa VacancyDto I communicate to myself that this sort of data is expected from my system as response or expected to be used in request.
+
+### Java concurrency things
+
+If you plan to handle concurrent access to one piece of data I highly recommend you to use database with transactions.
+
+Really can't suggest anything other than system with guarantees.
+
+In my case for simplest possible solution I have to rely on existing data structures like Maps and Sets.
+
+And why not make unit test that actually tries to interact with them in concurrent way to verify its behavior to some degree?
+
+### Tests as form of documentation
+
+While it is cool to have tests to verify some edge cases, main flow or something else related to logic of your application.
+
+It may be useful to have tests that check you 3rd-party library contracts, so that you know that your assumptions about behavior are correct.
+
+And if such tests take too long you can always mark tham with ignore annotation and run only when necessary.

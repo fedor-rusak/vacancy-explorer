@@ -6,18 +6,18 @@ import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.HashMap;
-import java.util.Collections;
 
 @Component
 public class VacancyRepository {
 
 	private AtomicInteger idGenerator = new AtomicInteger(0);
-	private Map<Integer, VacancyDto> internalStorage = Collections.synchronizedMap(new HashMap<>());
+	private Map<Integer, VacancyDto> internalStorage = new ConcurrentHashMap<>();
 
 	private final SimpleDateFormat sdf;
 
