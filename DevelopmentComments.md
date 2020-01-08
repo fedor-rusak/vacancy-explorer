@@ -173,3 +173,17 @@ While it is cool to have tests to verify some edge cases, main flow or something
 It may be useful to have tests that check you 3rd-party library contracts, so that you know that your assumptions about behavior are correct.
 
 And if such tests take too long you can always mark tham with ignore annotation and run only when necessary.
+
+### Tests that are useful for springboot prototype
+
+There are many sublte stupid mistakes you can do while making simple http backend with Springboot.
+
+Wrong path for GetMapping? Wrong constructor that forgot to assign autowired dependency to a private field? You name it.
+
+If you can have unit tests that run in 3 seconds and check the most important part of you project - do it!
+
+It will make changing stuff easier, and you have some automated thing to run after any meaningful change in your code. Even before commit.
+
+### Java Set
+
+Really retainAll as a way to do set intersection? This is hmm so not obvious...

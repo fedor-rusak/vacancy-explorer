@@ -49,6 +49,7 @@ curl localhost:8080/vacancies \
 
 Open [corresponding URL](http://localhost:8080/vacancies/1) in your browser to see vacancy data.
 
+Or open [search query example](http://localhost:8080/search?query=cool) in your browser to see an array of suitable vacancy-ids from backend.
 
 To delete vacancy by id:
 

@@ -20,12 +20,8 @@ public class SearchService {
 
 	public void index(int key, VacancyDto vacancyDto) {
 		String textForIndex = vacancyDto.getVacancyName() + " " + vacancyDto.getDescription();
-		textForIndex = textForIndex
-				.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}]", " ")
-				.replaceAll(" +", " ")
-				.trim();
 
-		String[] words = textForIndex.split(" ");
+		String[] words = prepareWords(textForIndex);
 
 		vacancyToWordIndex.put(key, Collections.synchronizedSet(new HashSet<String>()));
 
@@ -52,6 +48,42 @@ public class SearchService {
 		for (String word: wordsForVacancy) {
 			wordToVacancyIndex.get(word).remove(key);
 		}
+	}
+
+	public Set<Integer> search(String query) {
+		String[] queryWords = prepareWords(query);
+
+		if (queryWords[0].equals("")) {
+			//no actual words in query to look for
+			return new HashSet<Integer>();
+		}
+
+		for (String queryWord: queryWords) {
+			if (wordToVacancyIndex.get(queryWord) == null) {
+				//current approach is AND logic for ALL words
+				//so if some word is missing in our index. Empty result.
+				return new HashSet<Integer>();
+			}
+		}
+
+		Set<Integer> result = new HashSet<>(wordToVacancyIndex.get(queryWords[0]));
+
+		for (int i = 1; i < queryWords.length; i++) {
+			Set<Integer> setForIntersection = wordToVacancyIndex.get(queryWords[i]);
+
+			result.retainAll(setForIntersection);
+		}
+
+		return result;
+	}
+
+	private static String[] prepareWords(String input) {
+		return input
+				.toLowerCase()
+				.replaceAll("[^\\p{IsAlphabetic}\\p{IsDigit}]", " ")
+				.replaceAll(" +", " ")
+				.trim()
+				.split(" ");
 	}
 
 }

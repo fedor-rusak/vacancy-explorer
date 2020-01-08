@@ -40,7 +40,7 @@ public class AppTest {
 	private MockMvc mvc;
 
 	@Test
-	public void checkVacancyController() throws Exception {
+	public void checkWholeApp() throws Exception {
 		//can't delete or read non-existing vacancy
 		mvc.perform(delete("/vacancies/1"))
 				.andExpect(status().isNotFound());
@@ -55,7 +55,7 @@ public class AppTest {
 				.andExpect(status().isBadRequest())
 				.andExpect(content().string("Fields vacancyName, description, sourceName and correspondingId are mandatory."));
 
-		//adding allows reading and deleting
+		//adding allows reading, searching and deleting
 		VacancyDto dto = new VacancyDto();
 		dto.setVacancyName(VACANCY_NAME);
 		dto.setDescription(DESCRIPTION);
@@ -81,15 +81,24 @@ public class AppTest {
 				.andExpect(header().string(HttpHeaders.CONTENT_TYPE, containsString(MediaType.APPLICATION_JSON.toString())))
 				.andExpect(status().isOk());
 
+		mvc.perform(get("/search?query=tEst"))
+				.andExpect(content().string("[1]"))		
+				.andExpect(status().isOk());
+
 		mvc.perform(delete("/vacancies/1"))
 				.andExpect(status().isOk());
 
-		//after deleting can't delete or read the vacancy
+		//after deleting can't delete, read or search for the vacancy
 		mvc.perform(delete("/vacancies/1"))
 				.andExpect(status().isNotFound());
  
 		mvc.perform(get("/vacancies/1"))
 				.andExpect(status().isNotFound());
+
+		//it is (200) OK to get empty result when no vacancies match to the query
+		mvc.perform(get("/search?query=tEst"))
+			.andExpect(content().string("[]"))		
+			.andExpect(status().isOk());
 	}
 
 }
